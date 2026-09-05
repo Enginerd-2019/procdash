@@ -1,0 +1,4 @@
+# build artifacts
+/procdash
+*.test
+*.out
