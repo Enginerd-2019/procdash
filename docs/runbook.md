@@ -13,8 +13,8 @@ Rules of this document:
 
 | Capability | Status |
 |---|---|
-| `/proc` parsing library (`status`) | **live** |
-| Remaining snapshot parsers (`stat`, `io`, `uptime`) | pending |
+| `/proc` parsing library (`status`, `stat`) | **live** |
+| Remaining snapshot parsers (`io`, `uptime`) | pending |
 | Snapshot CLI (`procdash <pid>`) | pending |
 | Continuous sampler / top view | pending |
 | Prometheus exporter (`/metrics`) | pending |

@@ -56,7 +56,7 @@ datasource. See [decisions.md](decisions.md) ADR-002.
   stateless runs in containers and is reproducible from the repo with
   `docker compose up`.
 
-## Current state (2026-09-05)
+## Current state (2026-10-17)
 
 `internal/procfs` exists and is the only package:
 
@@ -69,9 +69,16 @@ datasource. See [decisions.md](decisions.md) ADR-002.
 - `/proc/<pid>/status` parser: identity, state, Uid/Gid, threads, and
   the `Vm*` memory block with explicit absence modeling (`HasVM`) for
   kernel threads and zombies.
-- Fixture harness under `testdata/` (live-captured kernel output) +
-  table-driven tests; parse functions at 100% statement coverage.
+- `/proc/<pid>/stat` parser: the positional, single-line format, with
+  the comm-field hazard handled — `comm` is process-controlled and may
+  contain spaces and parentheses, so it is taken as the text between
+  the first `(` and the last `)`, and only the kernel-positional
+  remainder is split on whitespace. Cumulative CPU ticks, start time,
+  thread count, and memory sizes are exposed in the kernel's own units,
+  with conversion methods (ticks → duration, pages → bytes).
+- Fixture harness under `testdata/`: live-captured kernel output, plus
+  one hand-crafted malformed fixture for the parse-error path.
+  Table-driven tests; parse functions at 100% statement coverage.
 
-No binary is built yet; `go.mod` has zero dependencies. Next:
-remaining snapshot parsers (`stat`, `io`, `uptime`), then the
-one-shot CLI.
+No binary is built yet; `go.mod` has zero dependencies. Next: the
+remaining snapshot parsers (`io`, `uptime`), then the one-shot CLI.
