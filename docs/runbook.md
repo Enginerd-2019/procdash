@@ -37,6 +37,11 @@ go test ./internal/procfs -run TestName   # single test
 go test -cover ./...                      # coverage summary
 ```
 
+The common commands are also wrapped in a `Makefile`: `make` alone
+runs fmt, vet, and test; `make fmt` writes formatting fixes in place;
+`make vet`, `make test`, and `make cover` run the matching commands;
+`make clean` removes the coverage profile.
+
 The test suite never needs root and touches no live kernel state —
 parsers are exercised against committed fixtures under
 `internal/procfs/testdata/`.
